@@ -1,0 +1,40 @@
+<scxml initial="unpressed">
+
+  <component>
+    <svg width="100" height="100">
+      <rect id="btn" x="50" y="50" rx="20" ry="20" width="400" height="150"
+        style="fill:red;stroke:black;stroke-width:1;opacity:0.5" />
+      </svg>
+  </component>
+
+  <transitions>
+
+  </transitions>
+
+  <state id="unpressed">
+    <transition event="on-hover" target="hovered">
+      <modify target="btn" style="fill:red;stroke:black;stroke-width:1;"/>
+    </transition>
+    <transition event="on-click-start" target="clicked">
+      <modify target="btn" style="fill:blue;stroke:balck;stroke-width:2;"/>
+    </transition>
+  </state>
+
+  <state id="hovered">
+    <transition event="on-hover-end" target="unpressed">
+      <modify target="btn" style="fill:red;stroke:black;stroke-width:1;opacity:0.5;"/>
+    </transition>
+    <transition event="on-click-start" target="clicked">
+      <modify target="btn" style="fill:blue;stroke:balck;stroke-width:2;"/>
+    </transition>
+  </state>
+
+  <state id="clicked">
+    <transition event="on-click-end" target="unpressed">
+      <modify target="btn" style="fill:red;stroke:black:stroke-width:1;opacity:0.5">
+    </transition>
+  </state>
+
+<!-- Thoughts- define a global <transition id="..." event="..." target="..."> that can then be called using it's ide from any state[]-->
+<!-- Build a go parser for all of this...-->
+<!-- Or perhapse I should take this and convert it into json since any scripting will be in JS anyway... -->
