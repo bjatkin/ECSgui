@@ -41,6 +41,9 @@ func main() {
 	manager.update()
 	manager.update()
 	manager.update()
+
+	//SVG drawing
+	exampleGUI()
 }
 
 type Position struct {
