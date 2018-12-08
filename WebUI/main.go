@@ -1,11 +1,15 @@
-package main
+package webui
 
-import "fmt"
+import (
+	"ECSgui/ECSys"
 
-func exampleGUI() {
+	"github.com/dennwc/dom"
+)
+
+func ExampleGUI() {
 	moveBttn := SVG{
-		CType: CType{1},
-		Tag:   "g",
+		CType: ecs.CType{1},
+		Tag:   "svg",
 		Attr: map[string]interface{}{
 			"width":  100,
 			"height": 100,
@@ -57,22 +61,34 @@ func exampleGUI() {
 		},
 	}
 
-	MoveButton := NewEntity(&moveBttn)
-	DrawSVG := NewSystem([]uint16{1}, func(c []Component) {
-		comp := FindComponents(c, 1)[0]
+	MoveButton := ecs.NewEntity(&moveBttn)
+	DrawSVG := ecs.NewSystem([]uint16{1}, func(c []ecs.Component) {
+		comp := ecs.FindComponents(c, 1)[0]
 		//Draw the svg here
 		svg := comp.(*SVG)
-		fmt.Printf("%#v\n\n", svg)
 
-		fmt.Print("<" + svg.Tag)
-		for k, v := range svg.Attr {
-			fmt.Printf(" %s=\"%d\"", k, v)
+		var build func(*dom.Element, []*SVG)
+		build = func(parent *dom.Element, children []*SVG) {
+			for _, c := range children {
+				tag := dom.Doc.CreateElementNS("http://www.w3.org/2000/svg", c.Tag)
+				for k, v := range c.Attr {
+					tag.SetAttribute(k, v)
+				}
+				build(tag, c.Children)
+				parent.AppendChild(tag)
+			}
 		}
-		fmt.Print(">")
-		fmt.Println("\n\n")
+
+		main := dom.Doc.CreateElementNS("http://www.w3.org/2000/svg", svg.Tag)
+		for k, v := range svg.Attr {
+			main.SetAttribute(k, v)
+		}
+
+		build(main, svg.Children)
+		dom.Body.AppendChild(main)
 	})
 
-	manager := NewManager([]*Handle{MoveButton}, []*System{&DrawSVG})
+	manager := ecs.NewManager([]*ecs.Handle{MoveButton}, []*ecs.System{&DrawSVG})
 
-	manager.update()
+	manager.Update()
 }

@@ -1,4 +1,4 @@
-package main
+package ecs
 
 import (
 	"fmt"
@@ -37,13 +37,8 @@ func main() {
 	})
 
 	manager := NewManager([]*Handle{player, other}, []*System{&echo, &drawFace})
-	manager.update()
-	manager.update()
-	manager.update()
-	manager.update()
-
-	//SVG drawing
-	exampleGUI()
+	manager.Update()
+	manager.Update()
 }
 
 type Position struct {

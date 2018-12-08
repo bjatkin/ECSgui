@@ -1,11 +1,15 @@
-package main
+package webui
+
+import (
+	"ECSgui/ECSys"
+)
 
 type SVG struct {
-	CType                           //We need this so that SVG adheres to the component interface
-	Tag      string                 //Change this to a byte array to make make sure it's on the stack
-	Hide     bool                   //Use this so every tag can be added and removed easily
-	Attr     map[string]interface{} //So ugly XP is there a better way we could achieve something similar?
-	Children []*SVG                 //Maybe stick a limit on this to make sure as much is on the stack as posible
+	ecs.CType                        //We need this so that SVG adheres to the component interface
+	Tag       string                 //Change this to a byte array to make make sure it's on the stack
+	Hide      bool                   //Use this so every tag can be added and removed easily
+	Attr      map[string]interface{} //So ugly XP is there a better way we could achieve something similar?
+	Children  []*SVG                 //Maybe stick a limit on this to make sure as much is on the stack as posible
 }
 
 type State struct {
@@ -27,7 +31,7 @@ type Mod struct {
 }
 
 type UIComponent struct {
-	CType       //Make sure the UIComponent adheres to the component interface
+	ecs.CType   //Make sure the UIComponent adheres to the component interface
 	Initial     *SVG
 	States      []State
 	Transitions []Transition

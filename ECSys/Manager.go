@@ -1,4 +1,4 @@
-package main
+package ecs
 
 type Manager struct {
 	cache   []*Handle
@@ -6,7 +6,7 @@ type Manager struct {
 	systems []*System
 }
 
-func (m *Manager) update() {
+func (m *Manager) Update() {
 	for _, s := range m.systems {
 		for _, h := range m.handles {
 			e := h.Entity()

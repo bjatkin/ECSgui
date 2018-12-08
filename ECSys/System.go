@@ -1,4 +1,4 @@
-package main
+package ecs
 
 type System struct {
 	signature [2]uint64 //Note this will only allow up to 128 systems to be in play at a time. is this too many? to few?

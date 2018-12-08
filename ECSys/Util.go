@@ -1,4 +1,4 @@
-package main
+package ecs
 
 func GenerageSignature(signature ...uint64) [2]uint64 {
 	ret := [2]uint64{}

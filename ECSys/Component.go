@@ -1,4 +1,4 @@
-package main
+package ecs
 
 type Component interface {
 	Type() uint64
